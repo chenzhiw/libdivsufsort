@@ -3,11 +3,12 @@
 libdivsufsort is a software library that implements a lightweight suffix array construction algorithm.
 
 ## News
+* 2016-09-16: Algorithm is now capable of computing the longest common prefix array in addition to the suffix array. 
 * 2015-03-21: The project has moved from [Google Code](http://code.google.com/p/libdivsufsort/) to [GitHub](https://github.com/y-256/libdivsufsort)
 
 ## Introduction
-This library provides a simple and an efficient C API to construct a suffix array and a Burrows-Wheeler transformed string from a given string over a constant-size alphabet.
-The algorithm runs in O(n log n) worst-case time using only 5n+O(1) bytes of memory space, where n is the length of
+This library provides a simple and an efficient C API to construct a suffix array, a longest common prefix array and a Burrows-Wheeler transformed string from a given string over a constant-size alphabet.
+The algorithm runs in O(n log n) worst-case time using only 5n+O(1) bytes of memory space (9n + O(1) if the LCP is computed), where n is the length of
 the string.
 
 ## Build requirements
@@ -59,6 +60,17 @@ typedef uint8_t sauchar_t;
  */
 saint_t
 divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n);
+
+/**
+ * Constructs the suffix array of a given string.
+ * @param T[0..n-1] The input string.
+ * @param SA[0..n-1] The output array of suffixes.
+ * @param LCP[0..n-1] The output array of LCP-values.
+ * @param n The length of the given string.
+ * @return 0 if no error occurred, -1 or -2 otherwise.
+ */
+saint_t
+divsuflcpsort@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t *SA, saidx@W64BIT@_t *LCP, saidx@W64BIT@_t n);
 
 /*
  * Constructs the burrows-wheeler transformed string of a given string.
@@ -117,6 +129,7 @@ libdivsufsort is released under the [MIT license](LICENSE "MIT license").
 > The MIT License (MIT)
 >
 > Copyright (c) 2003 Yuta Mori All rights reserved.
+> Copyright (c) 2016 Florian Kurpicz
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
@@ -138,3 +151,4 @@ libdivsufsort is released under the [MIT license](LICENSE "MIT license").
 
 ## Author
 * Yuta Mori
+* [Florian Kurpicz](mailto:florian.kurpicz@tu-dortmund.de) (LCP construction)

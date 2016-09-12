@@ -156,6 +156,60 @@ inverse_bw_transform(const sauchar_t *T, sauchar_t *U, saidx_t *A,
   return 0;
 }
 
+/* Checks the array LCP of the string T. */
+saint_t
+lcpcheck(const sauchar_t *T, const saidx_t *SA, const saidx_t *LCP,
+         saidx_t n, saint_t verbose) {
+  saidx_t i, j;
+
+  if(verbose) { fprintf(stderr, "lcpcheck: "); }
+
+  /* Check arguments. */
+  if((T == NULL) || (SA == NULL) || (n < 0)) {
+    if(verbose) { fprintf(stderr, "Invalid arguments.\n"); }
+    return -1;
+  }
+  if(n == 0) {
+    if(verbose) { fprintf(stderr, "Done.\n"); }
+    return 0;
+  }
+
+  /* check range: [0..n-1] */
+  for(i = 0; i < n; ++i) {
+    if((LCP[i] < 0) || (n <= LCP[i])) {
+      if(verbose) {
+        fprintf(stderr, "Out of the range [0,%" PRIdSAIDX_T "].\n"
+                        "  SA[%" PRIdSAIDX_T "]=%" PRIdSAIDX_T "\n",
+                        n - 1, i, LCP[i]);
+      }
+      return -2;
+    }
+  }
+
+  // Check LCP-values
+  for(i = 1; i < n; ++i) {
+    j = 0;
+    while (T[SA[i] + j] == T[SA[i - 1] + j]) { ++j; }
+    if (j != LCP[i]) {
+      if(verbose) {
+        printf("Error at position %i\n", i);
+        printf("Computed %i vs. LCP %i\n", j, LCP[i]);
+        for (j = 0; j < 20; j++) {
+          printf("%c", T[SA[i] + j]);
+        }
+        printf("\n");
+        for (j = 0; j < 20; j++) {
+          printf("%c", T[SA[i - 1] + j]);
+        }
+        printf("\n");
+      }
+      return -3;
+    }
+  }
+  if(1 <= verbose) { fprintf(stderr, "Done.\n"); }
+  return 0;
+}
+
 /* Checks the suffix array SA of the string T. */
 saint_t
 sufcheck(const sauchar_t *T, const saidx_t *SA,

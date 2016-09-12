@@ -76,6 +76,18 @@ saint_t
 divsufsort@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t *SA, saidx@W64BIT@_t n);
 
 /**
+ * Constructs the suffix array of a given string.
+ * @param T[0..n-1] The input string.
+ * @param SA[0..n-1] The output array of suffixes.
+ * @param LCP[0..n-1] The output array of LCP-values.
+ * @param n The length of the given string.
+ * @return 0 if no error occurred, -1 or -2 otherwise.
+ */
+DIVSUFSORT_API
+saint_t
+divsuflcpsort@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t *SA, saidx@W64BIT@_t *LCP, saidx@W64BIT@_t n);
+
+/**
  * Constructs the burrows-wheeler transformed string of a given string.
  * @param T[0..n-1] The input string.
  * @param U[0..n-1] The output string. (can be T)

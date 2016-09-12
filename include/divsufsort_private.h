@@ -93,6 +93,8 @@ extern "C" {
 # define ALPHABET_SIZE (UINT8_MAX + 1)
 #endif
 /* for divsufsort.c */
+#define MIN_STACK_EXTRA_SPACE (1024)
+#define MIN_STACK_SIZE (2 * (MIN_STACK_EXTRA_SPACE + ALPHABET_SIZE + 4))
 #define BUCKET_A_SIZE (ALPHABET_SIZE)
 #define BUCKET_B_SIZE (ALPHABET_SIZE * ALPHABET_SIZE)
 /* for sssort.c */

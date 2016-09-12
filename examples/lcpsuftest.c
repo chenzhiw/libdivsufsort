@@ -70,7 +70,7 @@ main(int argc, const char *argv[]) {
   FILE *fp;
   const char *fname;
   sauchar_t *T;
-  saidx_t *SA;
+  saidx_t *SA, *LCP;
   LFS_OFF_T n;
   clock_t start, finish;
   saint_t needclose = 1;
@@ -127,6 +127,7 @@ main(int argc, const char *argv[]) {
   /* Allocate 5n bytes of memory. */
   T = (sauchar_t *)malloc((size_t)n * sizeof(sauchar_t));
   SA = (saidx_t *)malloc((size_t)n * sizeof(saidx_t));
+  LCP = (saidx_t *)malloc((size_t)n * sizeof(saidx_t));
   if((T == NULL) || (SA == NULL)) {
     fprintf(stderr, "%s: Cannot allocate memory.\n", argv[0]);
     exit(EXIT_FAILURE);
@@ -145,21 +146,21 @@ main(int argc, const char *argv[]) {
 
   /* Construct the suffix array. */
   fprintf(stderr, "%s: %" PRIdOFF_T " bytes ... ", fname, n);
-  fprintf(stderr, "%s ", fname);
   start = clock();
-  if(divsufsort(T, SA, (saidx_t)n) != 0) {
+  if(divsuflcpsort(T, SA, LCP, (saidx_t)n) != 0) {
     fprintf(stderr, "%s: Cannot allocate memory.\n", argv[0]);
     exit(EXIT_FAILURE);
   }
   finish = clock();
-  fprintf(stderr, "\n");
   fprintf(stderr, "%.4f sec\n", (double)(finish - start) / (double)CLOCKS_PER_SEC);
 
   /* Check the suffix array. */
-  if(sufcheck(T, SA, (saidx_t)n, 1) != 0) { exit(EXIT_FAILURE); }
+  //if(sufcheck(T, SA, (saidx_t)n, 1) != 0) { exit(EXIT_FAILURE); }
+  if(lcpcheck(T, SA, LCP, (saidx_t)n, 1) != 0) { exit(EXIT_FAILURE); }
 
   /* Deallocate memory. */
   free(SA);
+  free(LCP);
   free(T);
 
   return 0;
