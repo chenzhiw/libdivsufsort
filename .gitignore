@@ -30,3 +30,4 @@
 
 # CMake files/directories
 build/
+debug/
