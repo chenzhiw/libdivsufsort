@@ -70,7 +70,7 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n);
  * @return 0 if no error occurred, -1 or -2 otherwise.
  */
 saint_t
-divsuflcpsort@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t *SA, saidx@W64BIT@_t *LCP, saidx@W64BIT@_t n);
+divsuflcpsort(const sauchar_t *T, saidx_t *SA, saidx_t *LCP, saidx_t n);
 
 /*
  * Constructs the burrows-wheeler transformed string of a given string.
@@ -83,6 +83,8 @@ divsuflcpsort@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t *SA, saidx@W64BIT@_t *
 saidx_t
 divbwt(const sauchar_t *T, sauchar_t *U, saidx_t *A, saidx_t n);
 ```
+
+A 64-bit API is also available in libdivsufsort64.
 
 ## Example Usage
 ```c
